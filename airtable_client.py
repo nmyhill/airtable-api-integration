@@ -1,3 +1,4 @@
+# airtable_client.py
 import os
 import time
 import typing as t
@@ -14,44 +15,52 @@ class AirtableError(Exception):
 class AirtableConfig:
     token: str = os.getenv("AIRTABLE_TOKEN", "")
     base_id: str = os.getenv("BASE_ID", "")
+    # table is optional now; we'll pass it explicitly when we build clients
     table: str = os.getenv("TABLE_NAME", "")
 
     def validate(self) -> None:
         missing = [k for k, v in [
             ("AIRTABLE_TOKEN", self.token),
             ("BASE_ID", self.base_id),
-            ("TABLE_NAME", self.table),
+            # TABLE_NAME intentionally not required
         ] if not v]
         if missing:
             raise AirtableError(f"Missing env vars: {', '.join(missing)}")
 
 class AirtableClient:
-    def __init__(self, config: AirtableConfig, timeout: int = 30):
+    def __init__(self, config: AirtableConfig, *, table: str, timeout: int = 30):
         config.validate()
+        if not table:
+            raise AirtableError("AirtableClient requires a table name or table ID.")
         self.base_id = config.base_id
-        self.table = config.table
+        self.table = table
         self.base_url = f"https://api.airtable.com/v0/{self.base_id}/{self.table}"
         self.session = requests.Session()
         self.session.headers.update({"Authorization": f"Bearer {config.token}"})
         self.timeout = timeout
 
     def _request(self, method: str, url: str, **kwargs) -> dict:
-        """Minimal retry with backoff on 429/5xx."""
         max_attempts = 5
         backoff = 1.0
         for attempt in range(1, max_attempts + 1):
             resp = self.session.request(method, url, timeout=self.timeout, **kwargs)
             if resp.status_code == 429:
-                # Respect Airtable's rate limits; wait per 'Retry-After' if provided
                 retry_after = float(resp.headers.get("Retry-After", backoff))
                 time.sleep(retry_after)
             elif 500 <= resp.status_code < 600:
                 time.sleep(backoff)
                 backoff *= 2
             else:
-                resp.raise_for_status()
-                return resp.json()
-        # one last raise if we fall out of loop
+                try:
+                    resp.raise_for_status()
+                    return resp.json()
+                except requests.HTTPError as e:
+                    try:
+                        err = resp.json()
+                    except Exception:
+                        err = {"error": resp.text}
+                    raise AirtableError(f"{resp.status_code} {resp.reason} at {url} :: {err}") from e
+        # Final raise if we somehow exit loop
         resp.raise_for_status()
 
     def list_records(
@@ -63,13 +72,10 @@ class AirtableClient:
         filter_by_formula: t.Optional[str] = None,
         view: t.Optional[str] = None,
         sort: t.Optional[t.List[t.Dict[str, str]]] = None,
+        params_extra: t.Optional[t.Dict[str, t.Any]] = None,
     ) -> t.Iterator[dict]:
         """
         Yields full record objects from the table.
-        - fields: ["Name", "Status"]
-        - filter_by_formula: e.g., 'FIND("squat",{Exercise})'
-        - sort: [{"field": "Created", "direction": "desc"}]
-        - view: Name of a view to respect its filters/sorts
         """
         params: t.Dict[str, t.Any] = {"pageSize": page_size}
         if fields:
@@ -84,6 +90,8 @@ class AirtableClient:
                 params[f"sort[{i}][field]"] = s["field"]
                 if "direction" in s:
                     params[f"sort[{i}][direction]"] = s["direction"]
+        if params_extra:
+            params.update(params_extra)
 
         url = self.base_url
         total = 0
@@ -98,23 +106,3 @@ class AirtableClient:
             if not offset:
                 return
             params["offset"] = offset
-
-    def create_records(self, records: t.List[dict]) -> dict:
-        """
-        records = [{"fields": {"Name": "API Test", "Status": "Draft"}}]
-        """
-        payload = {"records": records}
-        return self._request("POST", self.base_url, json=payload)
-
-    def update_records(self, records: t.List[dict], *, typecast: bool = False) -> dict:
-        """
-        records = [{"id": "<rec_id>", "fields": {"Status": "Done"}}]
-        """
-        payload = {"records": records, "typecast": typecast}
-        return self._request("PATCH", self.base_url, json=payload)
-
-    def delete_records(self, record_ids: t.List[str]) -> dict:
-        params = []
-        for rid in record_ids:
-            params.append(("records[]", rid))
-        return self._request("DELETE", self.base_url, params=params)
