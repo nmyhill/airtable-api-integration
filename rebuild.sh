@@ -13,7 +13,7 @@ fi
 
 # 1) Export Airtable data → data/nodes.csv + data/edges.csv
 echo "• Running Python exporter"
-python generate_visnetwork_assets.py
+python3 generate_visnetwork_assets.py
 
 # 2) Ensure required R packages are installed
 echo "• Ensuring R packages"
