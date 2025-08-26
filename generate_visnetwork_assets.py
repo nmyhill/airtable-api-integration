@@ -117,13 +117,18 @@ def build_nodes_and_maps() -> (List[Dict[str, Any]], Dict[str, Dict[str, Any]], 
                     pillars = ", ".join([str(v) for v in val if v])
                 else:
                     pillars = str(val or "")
-            title = f"<b>{label}</b><br>Group: {group}" + (f"<br>Pillars: {pillars}" if pillars else "")
+                    
+            created_date = fields.get("Created", "") 
+            
+            title = f"<b>{label}</b><br>Group: {group}" + (f"<br>Pillars: {pillars}" if pillars else "") + \
+                (f"<br>Created: {created_date}" if created_date else "")
 
             node = {
                 "id": rec_id,            # Use Airtable Record ID → stable!
                 "label": label,
                 "group": group,
                 "pillars": pillars,
+                "created": created_date,
                 "title": title,
             }
             nodes.append(node)
@@ -199,7 +204,7 @@ if __name__ == "__main__":
     edges = build_edges(name_to_nodeid=name_to_nodeid, recid_to_nodeid=recid_to_nodeid)
 
     # 3) Write CSVs for the R visualization (exact columns expected)
-    write_csv(OUTDIR / "nodes.csv", nodes, headers=["id", "label", "group", "pillars", "title"])
+    write_csv(OUTDIR / "nodes.csv", nodes, headers=["id", "label", "group", "pillars","created","title"])
     write_csv(OUTDIR / "edges.csv", edges, headers=["from", "to"])
 
     # 4) (Optional) also write JSONs if you want to use elsewhere
