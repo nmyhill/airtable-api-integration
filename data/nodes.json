@@ -696,6 +696,14 @@
     "title": "<b>Olympic Lift</b><br>Group: Assessment<br>Created: 2025-06-26"
   },
   {
+    "id": "recAFIjGpP4WcqHsn",
+    "label": "VO2 Peak Estimate",
+    "group": "Assessment",
+    "pillars": "",
+    "created": "2025-10-06",
+    "title": "<b>VO2 Peak Estimate</b><br>Group: Assessment<br>Created: 2025-10-06"
+  },
+  {
     "id": "recBa1LTHX8JdtU2a",
     "label": "Grip Strength",
     "group": "Assessment",
@@ -737,11 +745,11 @@
   },
   {
     "id": "recFuSV8dg6ZXRroB",
-    "label": "Movement Assessment - Squat",
+    "label": "Resisted Lateral Squat",
     "group": "Assessment",
     "pillars": "",
     "created": "2025-04-03",
-    "title": "<b>Movement Assessment - Squat</b><br>Group: Assessment<br>Created: 2025-04-03"
+    "title": "<b>Resisted Lateral Squat</b><br>Group: Assessment<br>Created: 2025-04-03"
   },
   {
     "id": "recI3s8kMpMHQhzFG",
@@ -856,6 +864,14 @@
     "title": "<b>GAD-7 Score</b><br>Group: Assessment<br>Created: 2025-07-18"
   },
   {
+    "id": "recUZL7nR4LYAwgd0",
+    "label": "Sit to Stand",
+    "group": "Assessment",
+    "pillars": "",
+    "created": "2025-10-06",
+    "title": "<b>Sit to Stand</b><br>Group: Assessment<br>Created: 2025-10-06"
+  },
+  {
     "id": "recWtYN980TjKsr9V",
     "label": "Tyrer-Cuzik Cancer Risk Assessment",
     "group": "Assessment",
@@ -966,6 +982,14 @@
     "pillars": "",
     "created": "2025-04-18",
     "title": "<b>Wingate</b><br>Group: Assessment<br>Created: 2025-04-18"
+  },
+  {
+    "id": "recgxTIsesN0FKJHv",
+    "label": "Long Lever Hip Adduction",
+    "group": "Assessment",
+    "pillars": "",
+    "created": "2025-10-06",
+    "title": "<b>Long Lever Hip Adduction</b><br>Group: Assessment<br>Created: 2025-10-06"
   },
   {
     "id": "rechoG8EB9q7hQVBG",
@@ -3654,6 +3678,14 @@
     "pillars": "",
     "created": "2025-04-03",
     "title": "<b>New Mattress Purchase</b><br>Group: Intervention<br>Created: 2025-04-03"
+  },
+  {
+    "id": "recUcTWKS1tRCyvdS",
+    "label": "Reishi Mushroom Supplement",
+    "group": "Intervention",
+    "pillars": "",
+    "created": "2025-10-03",
+    "title": "<b>Reishi Mushroom Supplement</b><br>Group: Intervention<br>Created: 2025-10-03"
   },
   {
     "id": "recVAFv0N1e3knaG5",
