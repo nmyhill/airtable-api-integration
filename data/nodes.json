@@ -688,6 +688,14 @@
     "title": "<b>International Physical Activity Questionnaire</b><br>Group: Assessment<br>Created: 2025-08-05"
   },
   {
+    "id": "rec788xZprsEF0mmY",
+    "label": "Seated Grip Strength",
+    "group": "Assessment",
+    "pillars": "",
+    "created": "2025-10-21",
+    "title": "<b>Seated Grip Strength</b><br>Group: Assessment<br>Created: 2025-10-21"
+  },
+  {
     "id": "rec9Rgt8FcmgqVKUz",
     "label": "Olympic Lift",
     "group": "Assessment",
@@ -705,11 +713,11 @@
   },
   {
     "id": "recBa1LTHX8JdtU2a",
-    "label": "Grip Strength",
+    "label": "Standing Grip Strength",
     "group": "Assessment",
     "pillars": "",
     "created": "2025-04-03",
-    "title": "<b>Grip Strength</b><br>Group: Assessment<br>Created: 2025-04-03"
+    "title": "<b>Standing Grip Strength</b><br>Group: Assessment<br>Created: 2025-04-03"
   },
   {
     "id": "recBh2WToOK2NwOwY",
@@ -774,6 +782,14 @@
     "pillars": "",
     "created": "2025-04-18",
     "title": "<b>5-0-5 45 degree CoD - Frontal Plane</b><br>Group: Assessment<br>Created: 2025-04-18"
+  },
+  {
+    "id": "recKhpvI4GeAv3q3h",
+    "label": "Ebbeling Submaximal Treadmill Walk Test",
+    "group": "Assessment",
+    "pillars": "",
+    "created": "2025-10-21",
+    "title": "<b>Ebbeling Submaximal Treadmill Walk Test</b><br>Group: Assessment<br>Created: 2025-10-21"
   },
   {
     "id": "recKqi2nE1q8uLwuC",
@@ -1222,6 +1238,14 @@
     "pillars": "",
     "created": "2025-06-26",
     "title": "<b>Complement C4</b><br>Group: Metric<br>Created: 2025-06-26"
+  },
+  {
+    "id": "rec3z5AEbN0t2K6Wl",
+    "label": "Estimated VO2 max",
+    "group": "Metric",
+    "pillars": "",
+    "created": "2025-10-21",
+    "title": "<b>Estimated VO2 max</b><br>Group: Metric<br>Created: 2025-10-21"
   },
   {
     "id": "rec435DVVFfIfgclk",
